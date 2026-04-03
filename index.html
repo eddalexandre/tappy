@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando...</title>
+    <script>
+        // --- CENTRAL DE CONTROLE DE LINKS ---
+        const links = {
+            "b01": "https://www.instagram.com/iemwit/", // Link do Banco 1
+            "b02": "https://caxias.rs.gov.br/",          // Link do Banco 2
+            "ajuda": "https://wa.me/5541999383873",           // Link de Suporte/Oração
+            "default": "https://nba.com"      // Destino caso o ID não exista
+        };
+
+        // Captura o parâmetro 'id' da URL (ex: ?id=b01)
+        const urlParams = new URLSearchParams(window.location.search);
+        const idTag = urlParams.get('id');
+
+        // Executa o redirecionamento
+        if (idTag && links[idTag]) {
+            window.location.href = links[idTag];
+        } else {
+            window.location.href = links["default"];
+        }
+    </script>
+</head>
+<body style="background: #000; display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <p style="color: white; font-family: sans-serif;">Carregando conteúdo...</p>
+</body>
+</html>
