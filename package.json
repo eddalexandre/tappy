@@ -1,0 +1,7 @@
+{
+  "name": "tappy-nfc-manager",
+  "version": "1.0.0",
+  "dependencies": {
+    "@vercel/kv": "latest"
+  }
+}
