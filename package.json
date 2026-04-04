@@ -1,5 +1,8 @@
 {
+  "name": "tappy-project",
+  "version": "1.0.0",
+  "main": "api/index.js",
   "dependencies": {
-    "ioredis": "latest"
+    "ioredis": "^5.3.0"
   }
 }
