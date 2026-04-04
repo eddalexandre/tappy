@@ -1,4 +1,4 @@
-import { createClient } from '@vercel/kv';
+import { Redis } from 'ioredis';
 
 export default async function handler(req, res) {
     const { id, url } = req.query;
@@ -7,16 +7,18 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "ID e URL são obrigatórios" });
     }
 
-    try {
-        const kv = createClient({
-            url: process.env.TAPPY_REST_API_URL, // Ajustado para TAPPY
-            token: process.env.TAPPY_REST_API_TOKEN, // Ajustado para TAPPY
-        });
+    // Conecta usando a única variável que você tem disponível
+    const redis = new Redis(process.env.TAPPY_REDIS_URL);
 
-        await kv.set(id, url);
+    try {
+        // Grava no Redis (expira em 0, ou seja, para sempre)
+        await redis.set(id, url);
+        
+        // Fecha a conexão para não gastar recursos
+        await redis.quit();
+
         return res.status(200).json({ status: "success" });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: "Falha no banco TAPPY" });
+        return res.status(500).json({ error: "Erro no Redis: " + error.message });
     }
 }
